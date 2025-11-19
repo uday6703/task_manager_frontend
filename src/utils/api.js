@@ -1,7 +1,8 @@
 import axios from 'axios';
 
 // Default to the deployed backend on Render; allow override with REACT_APP_API_URL
-const API_URL = process.env.REACT_APP_API_URL || 'https://task-manager-backend-2550.onrender.com/api';
+// Default to the working Render backend; allow override with REACT_APP_API_URL
+const API_URL = process.env.REACT_APP_API_URL || 'https://task-manager-backend-1-xexb.onrender.com/api';
 
 const api = axios.create({
   baseURL: API_URL,
