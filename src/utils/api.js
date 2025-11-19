@@ -17,9 +17,31 @@ api.interceptors.request.use(
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
+    // Temporary debug logging to help diagnose routing/auth issues in deployed builds
+    try {
+      const method = (config.method || 'GET').toUpperCase();
+      const fullUrl = `${config.baseURL || ''}${config.url || ''}`;
+      // Avoid leaking token in logs in public places; this is for debugging during deploy only
+      console.log(`[api][request] ${method} ${fullUrl}`, {
+        authorization: config.headers.Authorization ? 'present' : 'none',
+      });
+    } catch (err) {
+      // swallow logging errors
+    }
     return config;
   },
   (error) => {
+    // Log response errors for debugging (status + url)
+    try {
+      const resp = error.response;
+      if (resp) {
+        console.error('[api][response error]', resp.status, resp.config?.url, resp.data);
+      } else {
+        console.error('[api][response error] no response object', error.message);
+      }
+    } catch (err) {
+      // swallow
+    }
     return Promise.reject(error);
   }
 );
