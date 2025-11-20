@@ -1,8 +1,10 @@
 import axios from 'axios';
 
-// Default to the deployed backend on Render; allow override with REACT_APP_API_URL
-// Default to the working Render backend; allow override with REACT_APP_API_URL
-const API_URL = process.env.REACT_APP_API_URL || 'https://task-manager-backend-1-xexb.onrender.com/api';
+// Normalize API base so it always ends with '/api'. This avoids 404s when
+// a deployment environment variable omits the '/api' suffix.
+const raw = process.env.REACT_APP_API_URL || 'https://task-manager-backend-1-xexb.onrender.com/api';
+const trimmed = raw.replace(/\/+$/g, '');
+const API_URL = trimmed.endsWith('/api') ? trimmed : `${trimmed}/api`;
 
 const api = axios.create({
   baseURL: API_URL,
