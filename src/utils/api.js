@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Normalize API base so it always ends with '/api'. This avoids 404s when
 // a deployment environment variable omits the '/api' suffix.
-const raw = process.env.REACT_APP_API_URL || 'https://task-manager-backend-1-xexb.onrender.com/api';
+const raw = process.env.REACT_APP_API_URL || 'https://task-manager-backend-2-bofk.onrender.com/api';
 const trimmed = raw.replace(/\/+$/g, '');
 const API_URL = trimmed.endsWith('/api') ? trimmed : `${trimmed}/api`;
 
